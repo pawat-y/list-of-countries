@@ -9,7 +9,13 @@ import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, CountryCardComponent],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
