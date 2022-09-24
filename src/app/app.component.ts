@@ -12,6 +12,9 @@ import { Country } from './core/types';
 export class AppComponent implements OnInit {
   title = 'list-of-contries';
 
+  isLoading: boolean = false;
+  isError: boolean = false;
+
   filterForm: FormGroup<any>;
   countries: Country[] = [];
 
@@ -29,15 +32,28 @@ export class AppComponent implements OnInit {
   }
 
   getCountries() {
+    this.isLoading = true;
+
     this.countryService
       .getCountries()
       .pipe(take(1))
-      .subscribe((response: Country[] | any) => {
-        this.countries = response;
-        this.countries.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-      });
+      .subscribe(
+        (response: Country[] | any) => {
+          this.isLoading = false;
+          this.isError = false;
+
+          this.countries = response;
+
+          // Sort countries by name A-Z
+          this.countries.sort((a, b) =>
+            a.name.common.localeCompare(b.name.common)
+          );
+        },
+        (error) => {
+          this.isLoading = false;
+          this.isError = true;
+        }
+      );
   }
 
   get search(): any {

@@ -1,23 +1,38 @@
-<div class="vh-100 d-flex justify-content-center align-items-center">
+<div class="bg-light vh-100 d-flex justify-content-center align-items-center">
   <div class="container">
+    <!-- Title -->
     <h1 class="mb-3">List of countries</h1>
+
+    <!-- Search Bar -->
     <form [formGroup]="filterForm">
       <input
         formControlName="search"
         type="text"
-        class="form-control mb-3"
+        class="form-control border-0 shadow-sm mb-3"
         placeholder="Search Country"
       />
     </form>
+
     <div class="vh-max-70 vh-70 overflow-auto">
+      <!-- Loading -->
       <div
-        *ngIf="countries.length === 0"
+        *ngIf="countries.length === 0 && isLoading"
         class="vh-70 d-flex justify-content-center align-items-center"
       >
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
+
+      <!-- No Data -->
+      <div
+        *ngIf="countries.length === 0 && !isLoading"
+        class="vh-70 d-flex justify-content-center align-items-center"
+      >
+        <h5>No Data</h5>
+      </div>
+
+      <!-- Data -->
       <div
         *ngFor="let country of countries | search: search.value"
         class="mb-3"
